@@ -1,0 +1,61 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>New Schedule</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <form (ngSubmit)="onCreateSchedule(f)" #f="ngForm">
+    <ion-item>
+      <ion-label floating>Title</ion-label>
+      <ion-input type="text" name="title" ngModel></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Description</ion-label>
+      <ion-textarea class="boxh" type="text" name="body" ngModel></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2018-04-20" name="date" ngModel></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Time</ion-label>
+      <ion-datetime displayFormat="h:mm" pickerFormat="h:mm A" min="06:18"  name="time" ngModel></ion-datetime>
+    </ion-item>
+
+    <ion-item [ngStyle]="{'background-color': f.value.color}">
+      <ion-label>Color</ion-label>
+      <ion-select name="color" ngModel okText="Okay" cancelText="Dismiss">
+        <ion-option value="#c6262e">Strawberry</ion-option>
+        <ion-option value="#f37329">Orange</ion-option>
+        <ion-option value="#f9c440">Banana</ion-option>
+        <ion-option value="#68b723">Lime</ion-option>
+        <ion-option value="#3689e6">Blueberry</ion-option>
+        <ion-option value="#7a36b1">Grape</ion-option>
+        <ion-option value="#715344">Cocoa</ion-option>
+        <ion-option value="#485a6c">Slate</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <button ion-button icon-left block type="submit">
+      <ion-icon name="add-circle"></ion-icon>
+      Add Schedule
+    </button>
+    <button ion-button icon-left color="danger" block type="button" (click)="dismiss()">
+      <ion-icon name="close-circle"></ion-icon>
+      Cancel
+    </button>
+  </form>
+
+</ion-content>
