@@ -1,0 +1,15 @@
+page-open-schedule {
+  .cardbox {
+    margin-top: -90px !important;
+    position: relative;
+    z-index: 100;
+  }
+  .cardDate,
+  .cardTime {
+    color: color($colors, light);
+    font-size: 1.5em;
+  }
+  .cardDate {
+    padding-bottom: 15px;
+  }
+}

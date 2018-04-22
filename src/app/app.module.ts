@@ -9,12 +9,14 @@ import { HomePage } from '../pages/home/home';
 import { IonicStorageModule } from '@ionic/storage';
 import { NewSchedulePage } from '../pages/new-schedule/new-schedule';
 import { ScheduleProvider } from '../providers/schedule/schedule';
+import { OpenSchedulePage } from '../pages/open-schedule/open-schedule';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    NewSchedulePage
+    NewSchedulePage,
+    OpenSchedulePage
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import { ScheduleProvider } from '../providers/schedule/schedule';
   entryComponents: [
     MyApp,
     HomePage,
-    NewSchedulePage
+    NewSchedulePage,
+    OpenSchedulePage
   ],
   providers: [
     StatusBar,

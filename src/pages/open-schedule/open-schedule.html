@@ -1,0 +1,46 @@
+<ion-header no-border>
+
+  <ion-navbar color="banana">
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="create"></ion-icon>
+      </button>
+      <button ion-button icon-only>
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-toolbar color="banana" text-center>
+    <ion-title text-capitalize *ngIf="data">{{ data.title }}</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-toolbar color="banana"></ion-toolbar>
+  <ion-toolbar color="banana"></ion-toolbar>
+  <div *ngIf="data">
+
+    <div padding class="cardbox">
+      <ion-card margin-bottom>
+        <ion-card-content>
+          {{ data.body }}
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-content [ngStyle]="{'background-color': data.color}">
+          <div text-center class="cardDate">
+            {{ data.date | date:'EEEE, MMMM d' }}
+          </div>
+          <div text-center class="cardTime">
+            {{ data.date + 'T' + data.time | date:'h:mm a' }}
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+    </div>
+
+
+  </div>
+</ion-content>
