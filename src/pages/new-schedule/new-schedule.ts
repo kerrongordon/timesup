@@ -9,8 +9,10 @@ import { ScheduleProvider, Item } from '../../providers/schedule/schedule';
 })
 export class NewSchedulePage {
 
-  limTime: string;
+  times: string;
+  theDate: Date;
   limDate: string;
+  color: string;
 
   constructor(
     public viewCtrl: ViewController,
@@ -21,6 +23,13 @@ export class NewSchedulePage {
 
   ionViewDidLoad() {
     this.limitDateTime();
+    let time = new Date();
+    this.times = time.toString();
+  }
+
+  pickColor(color: string, name: string) {
+    this.isValid(`Your pick is ${name}`);
+    return this.color = color;
   }
 
   addZero(num: number) {
@@ -58,10 +67,19 @@ export class NewSchedulePage {
     return day;
   }
 
+  getTheDate() {
+    this.theDate = new Date();
+  }
+
+  getTheId() {
+    this.getTheDate();
+    return Math.floor(Math.random() * this.theDate.getTime()).toString();
+  }
+
   onCreateSchedule(e) {
     if (!e.valid) return;
-    const time = new Date().toString();
-    const hash = Md5.hashStr(time);
+    let hash = Md5.hashStr(this.times);
+    const getId = this.getTheId();
     const data: Item = e.value;
     this.getWeekDay(data.date);
 
@@ -81,7 +99,7 @@ export class NewSchedulePage {
       return this.isValid('Please add a Time');
     }
 
-    if (data.color === '' || data.color === null) {
+    if (this.color === '' || this.color === null) {
       return this.isValid('Please add a Color');
     }
 
@@ -91,7 +109,7 @@ export class NewSchedulePage {
       body: data.body,
       date: data.date,
       time: data.time,
-      color: data.color,
+      color: this.color,
       isArchive: false,
       isDone: false
     }

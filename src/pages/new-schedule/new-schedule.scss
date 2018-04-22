@@ -1,9 +1,54 @@
 page-new-schedule {
-    .boxh{
-        height: 150px;
+  .boxh {
+    height: 150px;
+  }
+  textarea {
+    height: 100%;
+  }
+  .item-md {
+    padding-right: 16px;
+  }
+  .row-dots {
+    text-align: center;
+    .dot {
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      margin: 10px auto;
+      position: relative;
     }
-    textarea {
-        height: 100%;
-    }
+  }
+  .dot-strawberry {
+    background-color: color($colors, strawberry);
+  }
+  .dot-orange {
+    background-color: color($colors, orange);
+  }
+  .dot-banana {
+    background-color: color($colors, banana);
+  }
+  .dot-lime {
+    background-color: color($colors, lime);
+  }
+  .dot-blueberry {
+    background-color: color($colors, blueberry);
+  }
+  .dot-grape {
+    background-color: color($colors, grape);
+  }
+  .dot-cocoa {
+    background-color: color($colors, cocoa);
+  }
+  .dot-slate {
+    background-color: color($colors, slate);
+  }
+  .dot {
+    border: 3px solid $list-md-border-color;
+  }
+
+  .dot .activated {
+    border: 5px solid $list-md-border-color;
+  }
+
 
 }
