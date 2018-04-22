@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar padding-top color="banana">
+  <ion-toolbar color="banana">
 
     <ion-title>Time's Up</ion-title>
 
-    <div padding-top>
+    <!-- <div padding-top>
       <ion-segment [(ngModel)]="tabButton" color="dark">
         <ion-segment-button value="schedule">
           Schedule
@@ -12,56 +12,67 @@
           Archive
         </ion-segment-button>
       </ion-segment>
-    </div>
+    </div> -->
 
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <div [ngSwitch]="tabButton">
-    <ion-list *ngSwitchCase="'schedule'">
+  <!-- <div [ngSwitch]="tabButton"> -->
+  <!-- <ion-list *ngSwitchCase="'schedule'"> -->
+  <ion-list *ngIf="data">
 
-      <ion-item-group *ngFor="let dat of data">
+    <ion-item-group *ngFor="let dat of data">
 
-        <ion-item-divider sticky color="listhead">
-          <ion-label>{{ dat.date | date:'EEEE, MMMM d' }}</ion-label>
-        </ion-item-divider>
+      <ion-item-divider sticky color="listhead">
+        <ion-label>{{ dat.date | date:'EEEE, MMMM d' }}</ion-label>
+      </ion-item-divider>
 
-        <ng-container *ngFor="let ele of dat.items">
+      <ng-container *ngFor="let ele of dat.items">
 
-          <ion-item-sliding [ngStyle]="{'border-color': ele.color}" [hidden]="ele.isArchive">
+        <ion-item-sliding [ngStyle]="{'border-color': ele.color}">
 
 
-            <button ion-item (click)="openItem(ele.id)">
-              <h3>{{ ele.title | titlecase }}</h3>
-              <p>{{ ele.body | titlecase }}</p>
-              <ion-note item-end>{{ ele.date + 'T' + ele.time | date:'h:mm a' }}</ion-note>
-            </button>
+          <button ion-item (click)="openItem(ele.id)">
+            <h3>{{ ele.title | titlecase }}</h3>
+            <p>{{ ele.body | titlecase }}</p>
+            <ion-note item-end>{{ ele.date + 'T' + ele.time | date:'h:mm a' }}</ion-note>
+          </button>
 
-            <ion-item-options side="left" (ionSwipe)="acrhiveItem(ele.id)">
+          <!-- <ion-item-options side="left" (ionSwipe)="acrhiveItem(ele.id)">
               <button ion-button (click)="acrhiveItem(ele.id)">
                 <ion-icon name="archive"></ion-icon>
                 Archive
               </button>
-            </ion-item-options>
+            </ion-item-options> -->
 
-            <ion-item-options side="right" (ionSwipe)="deleteItem(ele.id)">
-              <button ion-button color="danger" (click)="deleteItem(ele.id)">
-                <ion-icon name="trash"></ion-icon>
-                Delete
-              </button>
-            </ion-item-options>
+          <ion-item-options side="right" (ionSwipe)="deleteItem(ele.id)">
+            <button ion-button color="danger" (click)="deleteItem(ele.id)">
+              <ion-icon name="trash"></ion-icon>
+              Delete
+            </button>
+          </ion-item-options>
 
-          </ion-item-sliding>
+        </ion-item-sliding>
 
-        </ng-container>
+      </ng-container>
 
-      </ion-item-group>
+    </ion-item-group>
 
-    </ion-list>
+  </ion-list>
 
-    <ion-list *ngSwitchCase="'archive'">
+  <div *ngIf="data">
+    <div *ngIf="data.length === 0">
+      <div text-center class="nocontent">
+        <ion-icon name="alert"></ion-icon>
+        <h3>No Schedule</h3>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <ion-list *ngSwitchCase="'archive'">
 
       <ion-item-group *ngFor="let dat of data">
 
@@ -100,9 +111,9 @@
 
       </ion-item-group>
 
-    </ion-list>
+    </ion-list> -->
 
-  </div>
+  <!-- </div> -->
 
 
 

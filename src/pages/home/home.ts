@@ -46,8 +46,6 @@ export class HomePage implements OnInit{
         };
       });
 
-      console.log('groupArrays ', groupArrays);
-
       return this.data = groupArrays.sort((a,b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
       });
@@ -71,17 +69,17 @@ export class HomePage implements OnInit{
       .then(() => this.presentToast('Schedule to Deleted'));
   }
 
-  acrhiveItem(id: string) {
-    return this.scheduleProv.archiveSchedule(id)
-      .then(() => this.loadData())
-      .then(() => this.presentToast('Added to Acrhive'));
-  }
+  // acrhiveItem(id: string) {
+  //   return this.scheduleProv.archiveSchedule(id)
+  //     .then(() => this.loadData())
+  //     .then(() => this.presentToast('Added to Acrhive'));
+  // }
 
-  restoreItem(id: string) {
-    return this.scheduleProv.restoreItemSchedule(id)
-      .then(() => this.loadData())
-      .then(() => this.presentToast('Restore from Acrhive'));
-  }
+  // restoreItem(id: string) {
+  //   return this.scheduleProv.restoreItemSchedule(id)
+  //     .then(() => this.loadData())
+  //     .then(() => this.presentToast('Restore from Acrhive'));
+  // }
 
   presentToast(message: string) {
     let toast = this.toastCtrl.create({

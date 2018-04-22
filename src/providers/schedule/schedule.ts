@@ -18,7 +18,6 @@ export class ScheduleProvider {
   schedules: Item[];
 
   constructor(private storage: Storage) {
-    console.log('Hello ScheduleProvider Provider');
   }
 
   addSchedule(data: Item) {
@@ -43,23 +42,23 @@ export class ScheduleProvider {
     return this.storage.set('schedules', this.schedules);
   }
 
-  archiveSchedule(id: string) {
-    for (let i = 0; i < this.schedules.length; i++) {
-      if (this.schedules[i].id === id) {
-        this.schedules[i].isArchive = true;
-      }
-    }
-    return this.storage.set('schedules', this.schedules);
-  }
+  // archiveSchedule(id: string) {
+  //   for (let i = 0; i < this.schedules.length; i++) {
+  //     if (this.schedules[i].id === id) {
+  //       this.schedules[i].isArchive = true;
+  //     }
+  //   }
+  //   return this.storage.set('schedules', this.schedules);
+  // }
 
-  restoreItemSchedule(id: string) {
-    for (let i = 0; i < this.schedules.length; i++) {
-      if (this.schedules[i].id === id) {
-        this.schedules[i].isArchive = false;
-      }
-    }
-    return this.storage.set('schedules', this.schedules);
-  }
+  // restoreItemSchedule(id: string) {
+  //   for (let i = 0; i < this.schedules.length; i++) {
+  //     if (this.schedules[i].id === id) {
+  //       this.schedules[i].isArchive = false;
+  //     }
+  //   }
+  //   return this.storage.set('schedules', this.schedules);
+  // }
 
   openSchedule(id: string) {
     for (let i = 0; i < this.schedules.length; i++) {

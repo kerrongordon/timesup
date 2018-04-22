@@ -67,19 +67,19 @@ export class NewSchedulePage {
     return day;
   }
 
-  getTheDate() {
-    this.theDate = new Date();
-  }
+  // getTheDate() {
+  //   this.theDate = new Date();
+  // }
 
-  getTheId() {
-    this.getTheDate();
-    return Math.floor(Math.random() * this.theDate.getTime()).toString();
-  }
+  // getTheId() {
+  //   this.getTheDate();
+  //   return Math.floor(Math.random() * this.theDate.getTime()).toString();
+  // }
 
   onCreateSchedule(e) {
     if (!e.valid) return;
     let hash = Md5.hashStr(this.times);
-    const getId = this.getTheId();
+    // const getId = this.getTheId();
     const data: Item = e.value;
     this.getWeekDay(data.date);
 
