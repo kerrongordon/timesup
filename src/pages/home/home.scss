@@ -1,8 +1,12 @@
 page-home {
     button ion-label{
-        padding-left: 10px;
+        padding-left: 25px;
     }
     ion-item-sliding {
+
+        button.item.item-block {
+          padding: 0;
+        }
     
         &:after {
             border-left: solid 3px #2cc6d6;

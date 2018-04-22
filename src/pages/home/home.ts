@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { NewSchedulePage } from '../new-schedule/new-schedule';
 import { ScheduleProvider, Item } from '../../providers/schedule/schedule';
+import { ToastController } from 'ionic-angular';
+import { OpenSchedulePage } from '../open-schedule/open-schedule';
 
 @Component({
   selector: 'page-home',
@@ -9,13 +11,16 @@ import { ScheduleProvider, Item } from '../../providers/schedule/schedule';
 })
 export class HomePage implements OnInit{
 
+  isArchive: boolean;
   data: { date: string; items: Item; }[];
-  color = '#555';
+  color: string;
+  tabButton: string = 'schedule';
 
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
-    private scheduleProv: ScheduleProvider
+    private scheduleProv: ScheduleProvider,
+    public toastCtrl: ToastController
   ) {
 
   }
@@ -41,7 +46,9 @@ export class HomePage implements OnInit{
         };
       });
 
-      this.data = groupArrays.sort((a,b) => {
+      console.log('groupArrays ', groupArrays);
+
+      return this.data = groupArrays.sort((a,b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
       });
 
@@ -54,16 +61,34 @@ export class HomePage implements OnInit{
     newScMod.present();
   }
 
-  openItem() {
-    console.log('item open');
+  openItem(id: string) {
+    return this.navCtrl.push(OpenSchedulePage, {id: id});
   }
 
-  deleteItem() {
-    console.log('item remove');
+  deleteItem(id: string) {
+    return this.scheduleProv.removeSchedule(id)
+      .then(() => this.loadData())
+      .then(() => this.presentToast('Schedule to Deleted'));
   }
 
-  acrhiveItem() {
-    console.log('item archive');
+  acrhiveItem(id: string) {
+    return this.scheduleProv.archiveSchedule(id)
+      .then(() => this.loadData())
+      .then(() => this.presentToast('Added to Acrhive'));
+  }
+
+  restoreItem(id: string) {
+    return this.scheduleProv.restoreItemSchedule(id)
+      .then(() => this.loadData())
+      .then(() => this.presentToast('Restore from Acrhive'));
+  }
+
+  presentToast(message: string) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
   }
 
 }
