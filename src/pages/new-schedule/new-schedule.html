@@ -1,13 +1,13 @@
-<ion-header>
+<ion-header no-border>
 
-  <ion-navbar>
+  <ion-toolbar color="banana">
     <ion-title>New Schedule</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="dismiss()">
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
-  </ion-navbar>
+  </ion-toolbar>
 
 </ion-header>
 
@@ -17,26 +17,26 @@
   <form (ngSubmit)="onCreateSchedule(f)" #f="ngForm">
     <ion-item>
       <ion-label floating>Title</ion-label>
-      <ion-input type="text" name="title" ngModel></ion-input>
+      <ion-input type="text" name="title" ngModel required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>Description</ion-label>
-      <ion-textarea class="boxh" type="text" name="body" ngModel></ion-textarea>
+      <ion-textarea class="boxh" type="text" name="body" ngModel required></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-label>Date</ion-label>
-      <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2018-04-20" name="date" ngModel></ion-datetime>
+      <ion-datetime displayFormat="DDDD MMM D, YYYY" [min]="limDate" name="date" ngModel required></ion-datetime>
     </ion-item>
 
     <ion-item>
       <ion-label>Time</ion-label>
-      <ion-datetime displayFormat="h:mm" pickerFormat="h:mm A" min="06:18"  name="time" ngModel></ion-datetime>
+      <ion-datetime displayFormat="h:mm" pickerFormat="h:mm A" name="time" ngModel required></ion-datetime>
     </ion-item>
 
     <ion-item [ngStyle]="{'background-color': f.value.color}">
       <ion-label>Color</ion-label>
-      <ion-select name="color" ngModel okText="Okay" cancelText="Dismiss">
+      <ion-select name="color" ngModel required okText="Okay" cancelText="Dismiss">
         <ion-option value="#c6262e">Strawberry</ion-option>
         <ion-option value="#f37329">Orange</ion-option>
         <ion-option value="#f9c440">Banana</ion-option>

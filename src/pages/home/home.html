@@ -1,216 +1,53 @@
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar color="banana">
     <ion-title>Time's Up</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="addNewSchedule()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <ion-list>
 
-    <ion-item-group>
+    <ion-item-group *ngFor="let dat of data">
 
-      <ion-item-divider sticky>
-        <ion-label>Monday</ion-label>
+      <ion-item-divider sticky color="listhead">
+        <ion-label>{{ dat.date | date:'EEEE, MMMM d' }}</ion-label>
       </ion-item-divider>
 
-      <ion-item-sliding>
+      <ion-item-sliding *ngFor="let ele of dat.items" [ngStyle]="{'border-color': ele.color}">
 
-        <button ion-item>
-          <h3>this is the title</h3>
-          <p>time start time end</p>
+        <button ion-item (click)="openItem()">
+          <h3>{{ ele.title | titlecase }}</h3>
+          <p>{{ ele.body | titlecase }}</p>
+          <ion-note item-end>{{ ele.date + 'T' + ele.time | date:'h:mm a' }}</ion-note>
         </button>
 
-        <ion-item-options>
-          <button ion-button>edit</button>
-          <button ion-button color="danger">delete</button>
+        <ion-item-options side="left" (ionSwipe)="acrhiveItem()">
+          <button ion-button (click)="acrhiveItem()">
+            <ion-icon name="archive"></ion-icon>
+            Archive
+          </button>
+        </ion-item-options>
 
+        <ion-item-options side="right" (ionSwipe)="deleteItem()">
+          <button ion-button color="danger" (click)="deleteItem()">
+            <ion-icon name="trash"></ion-icon>
+            delete
+          </button>
         </ion-item-options>
 
       </ion-item-sliding>
 
     </ion-item-group>
-
-    <!-- test -->
-
-    <ion-item-group>
-
-      <ion-item-divider sticky>
-        <ion-label>Trueday</ion-label>
-      </ion-item-divider>
-
-      <ion-item-sliding>
-
-        <button ion-item>
-          <h3>this is the title</h3>
-          <p>time start time end</p>
-        </button>
-
-        <ion-item-options>
-          <button ion-button>edit</button>
-          <button ion-button color="danger">delete</button>
-
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-      <ion-item-sliding>
-
-        <button ion-item>
-          <h3>this is the title</h3>
-          <p>time start time end</p>
-        </button>
-
-        <ion-item-options>
-          <button ion-button>edit</button>
-          <button ion-button color="danger">delete</button>
-
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-      <ion-item-sliding>
-
-        <button ion-item>
-          <h3>this is the title</h3>
-          <p>time start time end</p>
-        </button>
-
-        <ion-item-options>
-          <button ion-button>edit</button>
-          <button ion-button color="danger">delete</button>
-
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-      <ion-item-sliding>
-
-        <button ion-item>
-          <h3>this is the title</h3>
-          <p>time start time end</p>
-        </button>
-
-        <ion-item-options>
-          <button ion-button>edit</button>
-          <button ion-button color="danger">delete</button>
-
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-      <ion-item-sliding>
-
-        <button ion-item>
-          <h3>this is the title</h3>
-          <p>time start time end</p>
-        </button>
-
-        <ion-item-options>
-          <button ion-button>edit</button>
-          <button ion-button color="danger">delete</button>
-
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-
-    </ion-item-group>
-
-    <ion-item-group>
-
-      <ion-item-divider sticky>
-        <ion-label>Trueday</ion-label>
-      </ion-item-divider>
-
-      <ion-item-sliding>
-
-        <button ion-item>
-          <h3>this is the title</h3>
-          <p>time start time end</p>
-        </button>
-
-        <ion-item-options>
-          <button ion-button>edit</button>
-          <button ion-button color="danger">delete</button>
-
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-      <ion-item-sliding>
-
-        <button ion-item>
-          <h3>this is the title</h3>
-          <p>time start time end</p>
-        </button>
-
-        <ion-item-options>
-          <button ion-button>edit</button>
-          <button ion-button color="danger">delete</button>
-
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-      <ion-item-sliding>
-
-        <button ion-item>
-          <h3>this is the title</h3>
-          <p>time start time end</p>
-        </button>
-
-        <ion-item-options>
-          <button ion-button>edit</button>
-          <button ion-button color="danger">delete</button>
-
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-      <ion-item-sliding>
-
-        <button ion-item>
-          <h3>this is the title</h3>
-          <p>time start time end</p>
-        </button>
-
-        <ion-item-options>
-          <button ion-button>edit</button>
-          <button ion-button color="danger">delete</button>
-
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-      <ion-item-sliding>
-
-        <button ion-item>
-          <h3>this is the title</h3>
-          <p>time start time end</p>
-        </button>
-
-        <ion-item-options>
-          <button ion-button>edit</button>
-          <button ion-button color="danger">delete</button>
-
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-
-    </ion-item-group>
-
-
-
-
 
   </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab icon-only (click)="addNewSchedule()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
 
 
 </ion-content>

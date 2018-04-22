@@ -1,6 +1,25 @@
 page-home {
     button ion-label{
-        border-left: solid 3px #2cc6d6;
         padding-left: 10px;
     }
+    ion-item-sliding {
+    
+        &:after {
+            border-left: solid 3px #2cc6d6;
+            content: "";
+            display: block;
+            position: absolute;
+            margin: 12px;
+            height: 40px;
+            top: 1px;
+            border-color: inherit;
+        }        
+
+    }
+    ion-note {
+        font-size: 12px;
+        align-self: flex-start;
+        margin-top: 14px;
+    }
+    
 }
