@@ -1,6 +1,6 @@
 {
   "name": "Time's Up",
-  "short_name": "TimesUp",
+  "short_name": "Time's Up",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
