@@ -7,7 +7,7 @@ export interface Item {
   date: string,
   time: string,
   color: string,
-  id: number,
+  id: string | Int32Array,
   isArchive: boolean,
   isDone: boolean
 }

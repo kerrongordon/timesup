@@ -39,8 +39,6 @@ export class NewSchedulePage {
     const monthzero = this.addZero(month);
     const datezero = this.addZero(date);
 
-    console.log(`${year}-${monthzero}-${datezero}`);
-
     return this.limDate = `${year}-${monthzero}-${datezero}`;
   }
 
@@ -98,7 +96,7 @@ export class NewSchedulePage {
       isDone: false
     }
 
-    this.scheduleProv.addSchedule(data)
+    this.scheduleProv.addSchedule(newData)
     return this.dismiss();
   }
 
