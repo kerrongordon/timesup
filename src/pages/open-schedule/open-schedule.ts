@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, IonicPage } from 'ionic-angular';
 import { ScheduleProvider, Item } from '../../providers/schedule/schedule';
 
+@IonicPage()
 @Component({
   selector: 'page-open-schedule',
   templateUrl: 'open-schedule.html',
