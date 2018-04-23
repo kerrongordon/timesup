@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
-import { NewSchedulePage } from '../new-schedule/new-schedule';
+import { NavController, ModalController, IonicPage } from 'ionic-angular';
 import { ScheduleProvider, Item } from '../../providers/schedule/schedule';
 import { ToastController } from 'ionic-angular';
-import { OpenSchedulePage } from '../open-schedule/open-schedule';
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -54,13 +53,13 @@ export class HomePage implements OnInit{
   }
 
   addNewSchedule() {
-    let newScMod = this.modalCtrl.create(NewSchedulePage);
+    let newScMod = this.modalCtrl.create('NewSchedulePage');
     newScMod.onDidDismiss(() => this.loadData());
     newScMod.present();
   }
 
   openItem(id: string) {
-    return this.navCtrl.push(OpenSchedulePage, {id: id});
+    return this.navCtrl.push('OpenSchedulePage', {id: id});
   }
 
   deleteItem(id: string) {
