@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { ViewController, ToastController } from 'ionic-angular';
+import { ViewController, ToastController, IonicPage } from 'ionic-angular';
 import { Md5 } from 'ts-md5/dist/md5';
 import { ScheduleProvider, Item } from '../../providers/schedule/schedule';
 
+@IonicPage()
 @Component({
   selector: 'page-new-schedule',
   templateUrl: 'new-schedule.html',
