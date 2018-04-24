@@ -1,45 +1,44 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-
-export interface Item {
-  title: string,
-  body: string,
-  date: string,
-  time: string,
-  color: string,
-  id: string | Int32Array,
-  isArchive: boolean,
-  isDone: boolean
-}
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Item } from '../../interface/Schedule';
 
 @Injectable()
 export class ScheduleProvider {
 
-  schedules: Item[];
+  stream = new BehaviorSubject<Item[]>([]);
+  cast = this.stream.asObservable();
 
   constructor(private storage: Storage) {
+    this.loadDataBase();
   }
 
-  addSchedule(data: Item) {
-    this.schedules.push(data);
-    return this.storage.set('schedules', this.schedules);
-  }
 
-  getSchedule() {
+  loadDataBase() {
     return this.storage.get('schedules')
-      .then((schedules) => {
-        this.schedules = schedules == null ? [] : schedules;
-        return this.schedules;
-      })
+      .then((data) => this.stream.next(data));
+  }
+
+  addSchedule(newitem: Item) {
+    return this.storage.get('schedules')
+      .then((data: Item[]) => {
+        const d = data == null ? [] : data
+        d.push(newitem)
+        return this.storage.set('schedules', d)
+          .then((e) => this.stream.next(e));
+      });
   }
 
   removeSchedule(id: string) {
-    for (let i = 0; i < this.schedules.length; i++) {
-      if(this.schedules[i].id === id) {
-        this.schedules.splice(i, 1);
-      }
-    }
-    return this.storage.set('schedules', this.schedules);
+    let item = this.stream.getValue();
+    return this.storage.get('schedules')
+      .then((data: Item[]) => {
+        data.forEach((element, index) => {
+          element.id === id ? item.splice(index, 1) : null
+          return this.storage.set('schedules', item)
+            .then((e) => this.loadDataBase());
+        });
+      });
   }
 
   // archiveSchedule(id: string) {
@@ -61,11 +60,8 @@ export class ScheduleProvider {
   // }
 
   openSchedule(id: string) {
-    for (let i = 0; i < this.schedules.length; i++) {
-      if (this.schedules[i].id == id) {
-        return Promise.resolve(this.schedules[i]);
-      }      
-    }
+    return this.storage.get('schedules')
+      .then((data: Item[]) => data.filter(item => item.id === id));
   }
 
 }

@@ -5,7 +5,7 @@
       <button ion-button icon-only>
         <ion-icon name="create"></ion-icon>
       </button>
-      <button ion-button icon-only>
+      <button *ngIf="data" ion-button icon-only (click)="deleteConfirm(data.id, data.title)">
         <ion-icon name="trash"></ion-icon>
       </button>
     </ion-buttons>

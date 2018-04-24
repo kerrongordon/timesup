@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ViewController, ToastController, IonicPage } from 'ionic-angular';
 import { Md5 } from 'ts-md5/dist/md5';
-import { ScheduleProvider, Item } from '../../providers/schedule/schedule';
+import { ScheduleProvider } from '../../providers/schedule/schedule';
+import { Item } from '../../interface/Schedule';
 
 @IonicPage()
 @Component({

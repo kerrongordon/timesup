@@ -1,65 +1,15 @@
 <ion-header>
   <ion-toolbar color="banana">
-
     <ion-title>Time's Up</ion-title>
-
-    <!-- <div padding-top>
-      <ion-segment [(ngModel)]="tabButton" color="dark">
-        <ion-segment-button value="schedule">
-          Schedule
-        </ion-segment-button>
-        <ion-segment-button value="archive">
-          Archive
-        </ion-segment-button>
-      </ion-segment>
-    </div> -->
-
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <!-- <div [ngSwitch]="tabButton"> -->
-  <!-- <ion-list *ngSwitchCase="'schedule'"> -->
   <ion-list *ngIf="data">
-
-    <ion-item-group *ngFor="let dat of data">
-
-      <ion-item-divider sticky color="listhead">
-        <ion-label>{{ dat.date | date:'EEEE, MMMM d' }}</ion-label>
-      </ion-item-divider>
-
-      <ng-container *ngFor="let ele of dat.items">
-
-        <ion-item-sliding [ngStyle]="{'border-color': ele.color}">
-
-
-          <button ion-item (click)="openItem(ele.id)">
-            <h3>{{ ele.title | titlecase }}</h3>
-            <p>{{ ele.body | titlecase }}</p>
-            <ion-note item-end>{{ ele.date + 'T' + ele.time | date:'h:mm a' }}</ion-note>
-          </button>
-
-          <!-- <ion-item-options side="left" (ionSwipe)="acrhiveItem(ele.id)">
-              <button ion-button (click)="acrhiveItem(ele.id)">
-                <ion-icon name="archive"></ion-icon>
-                Archive
-              </button>
-            </ion-item-options> -->
-
-          <ion-item-options side="right" (ionSwipe)="deleteItem(ele.id)">
-            <button ion-button color="danger" (click)="deleteItem(ele.id)">
-              <ion-icon name="trash"></ion-icon>
-              Delete
-            </button>
-          </ion-item-options>
-
-        </ion-item-sliding>
-
-      </ng-container>
-
+    <ion-item-group *ngFor="let item of data">
+      <schedule-item [date]="item.date" [items]="item.items"></schedule-item>
     </ion-item-group>
-
   </ion-list>
 
   <div *ngIf="data">
@@ -71,59 +21,10 @@
     </div>
   </div>
 
-
-  <!-- <ion-list *ngSwitchCase="'archive'">
-
-      <ion-item-group *ngFor="let dat of data">
-
-        <ion-item-divider sticky color="listhead">
-          <ion-label>{{ dat.date | date:'EEEE, MMMM d' }}</ion-label>
-        </ion-item-divider>
-
-        <ng-container *ngFor="let ele of dat.items">
-
-          <ion-item-sliding [ngStyle]="{'border-color': ele.color}" [hidden]="!ele.isArchive">
-
-            <button ion-item (click)="openItem(ele.id)">
-              <h3>{{ ele.title | titlecase }}</h3>
-              <p>{{ ele.body | titlecase }}</p>
-              <ion-note item-end>{{ ele.date + 'T' + ele.time | date:'h:mm a' }}</ion-note>
-            </button>
-
-            <ion-item-options side="left" (ionSwipe)="restoreItem(ele.id)">
-              <button ion-button (click)="restoreItem(ele.id)">
-                <ion-icon name="refresh"></ion-icon>
-                Restore
-              </button>
-            </ion-item-options>
-
-            <ion-item-options side="right" (ionSwipe)="deleteItem(ele.id)">
-              <button ion-button color="danger" (click)="deleteItem(ele.id)">
-                <ion-icon name="trash"></ion-icon>
-                Delete
-              </button>
-            </ion-item-options>
-
-          </ion-item-sliding>
-
-        </ng-container>
-
-
-      </ion-item-group>
-
-    </ion-list> -->
-
-  <!-- </div> -->
-
-
-
-
   <ion-fab right bottom>
     <button ion-fab icon-only (click)="addNewSchedule()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-
-
 
 </ion-content>

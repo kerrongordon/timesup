@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, ModalController, IonicPage } from 'ionic-angular';
-import { ScheduleProvider, Item } from '../../providers/schedule/schedule';
+import { ScheduleProvider } from '../../providers/schedule/schedule';
 import { ToastController } from 'ionic-angular';
+import { Schedule } from '../../interface/Schedule';
 
 @IonicPage()
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit, OnDestroy{
 
   isArchive: boolean;
-  data: { date: string; items: Item; }[];
+  data: Schedule[];
   color: string;
   tabButton: string = 'schedule';
 
@@ -29,7 +30,8 @@ export class HomePage implements OnInit{
   }
 
   loadData() {
-    return this.scheduleProv.getSchedule().then(data => {
+    return this.scheduleProv.cast.subscribe(data => {
+      if (data === null ) return;
 
       const groups = data.reduce((groups, item) => {
         const date = item.date;
@@ -54,31 +56,8 @@ export class HomePage implements OnInit{
 
   addNewSchedule() {
     let newScMod = this.modalCtrl.create('NewSchedulePage');
-    newScMod.onDidDismiss(() => this.loadData());
     newScMod.present();
   }
-
-  openItem(id: string) {
-    return this.navCtrl.push('OpenSchedulePage', {id: id});
-  }
-
-  deleteItem(id: string) {
-    return this.scheduleProv.removeSchedule(id)
-      .then(() => this.loadData())
-      .then(() => this.presentToast('Schedule to Deleted'));
-  }
-
-  // acrhiveItem(id: string) {
-  //   return this.scheduleProv.archiveSchedule(id)
-  //     .then(() => this.loadData())
-  //     .then(() => this.presentToast('Added to Acrhive'));
-  // }
-
-  // restoreItem(id: string) {
-  //   return this.scheduleProv.restoreItemSchedule(id)
-  //     .then(() => this.loadData())
-  //     .then(() => this.presentToast('Restore from Acrhive'));
-  // }
 
   presentToast(message: string) {
     let toast = this.toastCtrl.create({
@@ -86,6 +65,10 @@ export class HomePage implements OnInit{
       duration: 3000
     });
     toast.present();
+  }
+
+  ngOnDestroy() {
+    this.loadData().unsubscribe();
   }
 
 }

@@ -1,27 +1,4 @@
 page-home {
-  button ion-label {
-    padding-left: 25px;
-  }
-  ion-item-sliding {
-    button.item.item-block {
-      padding: 0;
-    }
-    &:after {
-      border-left: solid 3px #2cc6d6;
-      content: "";
-      display: block;
-      position: absolute;
-      margin: 12px;
-      height: 40px;
-      top: 1px;
-      border-color: inherit;
-    }
-  }
-  ion-note {
-    font-size: 12px;
-    align-self: flex-start;
-    margin-top: 14px;
-  }
   .nocontent {
     margin-top: 45%;
     color: #d2d2d2;
