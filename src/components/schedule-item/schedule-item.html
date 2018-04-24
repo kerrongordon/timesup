@@ -1,0 +1,31 @@
+<ion-item-divider sticky color="listhead">
+  <ion-label *ngIf="date">{{ date | date:'EEEE, MMMM d' }}</ion-label>
+</ion-item-divider>
+
+<ng-container *ngFor="let item of items">
+
+  <ion-item-sliding [ngStyle]="{'border-color': item.color}">
+
+    <button ion-item (click)="openItemPage(item.id)">
+      <h3>{{ item.title | titlecase }}</h3>
+      <p>{{ item.body | titlecase }}</p>
+      <ion-note item-end>{{ item.date + 'T' + item.time | date:'h:mm a' }}</ion-note>
+    </button>
+
+    <ion-item-options side="left">
+      <button ion-button>
+        <ion-icon name="archive"></ion-icon>
+        Archive
+      </button>
+    </ion-item-options>
+
+    <ion-item-options side="right" (ionSwipe)="deleteConfirm(item.id, item.title)">
+      <button ion-button color="danger" (click)="deleteConfirm(item.id, item.title)">
+        <ion-icon name="trash"></ion-icon>
+        Delete
+      </button>
+    </ion-item-options>
+
+  </ion-item-sliding>
+
+</ng-container>
