@@ -12,12 +12,12 @@
       <ion-note item-end>{{ item.date + 'T' + item.time | date:'h:mm a' }}</ion-note>
     </button>
 
-    <ion-item-options side="left">
+    <!-- <ion-item-options side="left">
       <button ion-button>
         <ion-icon name="archive"></ion-icon>
         Archive
       </button>
-    </ion-item-options>
+    </ion-item-options> -->
 
     <ion-item-options side="right" (ionSwipe)="deleteConfirm(item.id, item.title)">
       <button ion-button color="danger" (click)="deleteConfirm(item.id, item.title)">
