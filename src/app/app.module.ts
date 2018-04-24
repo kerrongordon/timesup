@@ -18,7 +18,7 @@ import { ScheduleProvider } from '../providers/schedule/schedule';
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({
       name: 'timesup',
-      driverOrder: ['websql', 'sqlite', 'indexeddb']
+      driverOrder: ['sqlite', 'indexeddb', 'websql']
     })
   ],
   bootstrap: [IonicApp],
