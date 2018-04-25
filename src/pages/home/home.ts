@@ -27,6 +27,19 @@ export class HomePage implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.loadData();
+
+    window.addEventListener("load", () => {
+      function handleNetworkChange(event) {
+        if (navigator.onLine) {
+          console.log("online");
+        } else {
+          console.log("offline");
+        }
+      }
+      window.addEventListener("online", handleNetworkChange);
+      window.addEventListener("offline", handleNetworkChange);
+    });
+
   }
 
   loadData() {
