@@ -59,16 +59,30 @@ export class NewSchedulePage implements OnDestroy {
   }
 
   onCreateSchedule(e) {
+    const data: InputData = e.value;
+    if (data.title === '' || data.title === null) {
+      return this.isValid('Please add a Title');
+    }
+
+    if (data.body === '' || data.body === null) {
+      return this.isValid('Please add a Description');
+    }
+
+    if (data.date === '' || data.date === null) {
+      return this.isValid('Please add a Date');
+    }
+
+    if (data.time === '' || data.time === null) {
+      return this.isValid('Please add a Time');
+    }
+
     if (!e.valid) return;
     const hash = Md5.hashStr( moment().format() );
-    const data: InputData = e.value;
     const getTime = data.time;
     const geth = parseInt(getTime.substring(0,2));
     const getm = parseInt(getTime.substring(3,5));
     const addDate = moment().format();
     const setDate = moment(data.date).hour(geth).minute(getm).format();
-
-    console.log(data);
 
     const newData:Item = {
       id: hash,
@@ -85,11 +99,12 @@ export class NewSchedulePage implements OnDestroy {
 
     this.notifi(hash, data.title, setDate);
     this.scheduleProv.addSchedule(newData);
-    return this.dismiss();
+    return this.dismiss()
+      .then(() => this.isValid('New Schedule Added'));
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    return this.viewCtrl.dismiss();
   }
 
   isValid(message: string) {
@@ -98,7 +113,6 @@ export class NewSchedulePage implements OnDestroy {
       duration: 3000,
       position: 'top'
     });
-
     return toast.present();
   }
 

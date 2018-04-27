@@ -25,20 +25,21 @@
     <div padding class="cardbox">
 
       <div class="endoftime" text-center text-capitalize>
-        {{ endof }}
+        {{ endof }} {{ timeup }}
       </div>
 
       <ion-card margin-bottom>
         <ion-card-content class="cardspace">
           <h3 class="titlecard">Title: {{ data.title }}</h3>
-          <p>{{ data.body }}<p>
+          <p>{{ data.body }}
+            <p>
         </ion-card-content>
       </ion-card>
 
       <ion-card>
         <ion-card-content class="cardTime" text-center [ngStyle]="{'background-color': data.color}">
           {{ date }}
-        </ion-card-content>        
+        </ion-card-content>
       </ion-card>
 
       <ion-card>

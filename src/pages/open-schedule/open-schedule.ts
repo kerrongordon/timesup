@@ -16,6 +16,7 @@ export class OpenSchedulePage  {
   date: string;
   getId: string;
   endof: string;
+  timeup: string;
 
   constructor(
     public navCtrl: NavController,
@@ -33,7 +34,7 @@ export class OpenSchedulePage  {
   getDate() {
     if (!this.data) return;
     this.date = moment(this.data.date).format('dddd MMMM Do YYYY');
-    return this.endof = moment(`${this.data.date}T${this.data.time}`).endOf('day').fromNow();
+    return this.endof = moment(this.data.dateSet).endOf('day').fromNow();
   }
 
   loadData() {
@@ -43,10 +44,7 @@ export class OpenSchedulePage  {
     return this.scheduleProv.openSchedule(this.getId)
       .then(data => this.data = data[0])
       .then(() => this.getDate())
-      .then(() => {
-        const ago = this.endof;
-        this.endof.match('ago') ? this.endof = `${ago} Time's Up` : this.endof
-      });
+      .then(() => this.endof.match('ago') ? this.timeup = `Time's Up` : '');
   }
 
   deleteItem(id: string) {
