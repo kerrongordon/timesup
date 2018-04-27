@@ -1,90 +1,65 @@
-import { Component } from '@angular/core';
-import { ViewController, ToastController, IonicPage } from 'ionic-angular';
+import { Component, OnDestroy } from '@angular/core';
+import { ViewController, ToastController, IonicPage, Platform } from 'ionic-angular';
 import { Md5 } from 'ts-md5/dist/md5';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
-import { Item } from '../../interface/Schedule';
+import { Item, InputData } from '../../interface/Schedule';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+
+import * as moment from 'moment';
 
 @IonicPage()
 @Component({
   selector: 'page-new-schedule',
   templateUrl: 'new-schedule.html',
 })
-export class NewSchedulePage {
+export class NewSchedulePage implements OnDestroy {
 
+  timer: number;
   times: string;
-  theDate: Date;
   limDate: string;
-  color: string;
+  color: string = '#3689e6';
 
   constructor(
     public viewCtrl: ViewController,
     private scheduleProv: ScheduleProvider,
-    private toastCtrl: ToastController
-  ) {
-  }
+    private toastCtrl: ToastController,
+    private localNotifications: LocalNotifications,
+    private plt: Platform
+  ) {}
 
   ionViewDidLoad() {
     this.limitDateTime();
-    let time = new Date();
-    this.times = time.toString();
   }
 
-  pickColor(color: string, name: string) {
-    this.isValid(`Your pick is ${name}`);
+  pickColor(color: string) {
     return this.color = color;
   }
 
-  addZero(num: number) {
-    if (num.toString().length === 1) {
-      return `0${num}`;
-    } else {
-      return num;
-    }
+  stopTimer() {
+    return clearInterval(this.timer)
   }
 
   limitDateTime() {
-    const theDate = new Date();
-    const year = theDate.getUTCFullYear();
-    const month = theDate.getUTCMonth() + 1;
-    const date = theDate.getDate();
-    const monthzero = this.addZero(month);
-    const datezero = this.addZero(date);
-
-    return this.limDate = `${year}-${monthzero}-${datezero}`;
+    return this.limDate = moment().format('YYYY-MM-DD');
   }
-
-  getWeekDay(date) {
-    const d = new Date(date);
-
-    let weekday = new Array(7);
-        weekday[0] = "Sunday";
-        weekday[1] = "Monday";
-        weekday[2] = "Tuesday";
-        weekday[3] = "Wednesday";
-        weekday[4] = "Thursday";
-        weekday[5] = "Friday";
-        weekday[6] = "Saturday";
-
-    let day = weekday[d.getUTCDay()];
-    return day;
+ 
+  notifi(id:string | Int32Array, title:string, time:string ) {
+      if (this.plt.is('cordova')) {
+        const toDate = new Date(time);
+        const idToNub = Number(id);
+        return this.localNotifications.schedule({
+          id: idToNub,
+          text: title,
+          sound: this.plt.is('android') ? 'file://assets/sound/sound.mp3' : 'file://assets/sound/sound.caf',
+          icon: 'file://assets/imgs/logo.png',
+          trigger: { at: toDate },
+          data: { id: id }
+        });
+      }
   }
-
-  // getTheDate() {
-  //   this.theDate = new Date();
-  // }
-
-  // getTheId() {
-  //   this.getTheDate();
-  //   return Math.floor(Math.random() * this.theDate.getTime()).toString();
-  // }
 
   onCreateSchedule(e) {
-    if (!e.valid) return;
-    let hash = Md5.hashStr(this.times);
-    // const getId = this.getTheId();
-    const data: Item = e.value;
-    this.getWeekDay(data.date);
-
+    const data: InputData = e.value;
     if (data.title === '' || data.title === null) {
       return this.isValid('Please add a Title');
     }
@@ -101,27 +76,35 @@ export class NewSchedulePage {
       return this.isValid('Please add a Time');
     }
 
-    if (this.color === '' || this.color === null) {
-      return this.isValid('Please add a Color');
-    }
+    if (!e.valid) return;
+    const hash = Md5.hashStr( moment().format() );
+    const getTime = data.time;
+    const geth = parseInt(getTime.substring(0,2));
+    const getm = parseInt(getTime.substring(3,5));
+    const addDate = moment().format();
+    const setDate = moment(data.date).hour(geth).minute(getm).format();
 
-    const newData = {
+    const newData:Item = {
       id: hash,
       title: data.title,
       body: data.body,
       date: data.date,
       time: data.time,
-      color: this.color,
+      color: data.color === '' ? this.color : data.color,
       isArchive: false,
-      isDone: false
+      isDone: false,
+      dateAdded: addDate,
+      dateSet: setDate
     }
 
-    this.scheduleProv.addSchedule(newData)
-    return this.dismiss();
+    this.notifi(hash, data.title, setDate);
+    this.scheduleProv.addSchedule(newData);
+    return this.dismiss()
+      .then(() => this.isValid('New Schedule Added'));
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    return this.viewCtrl.dismiss();
   }
 
   isValid(message: string) {
@@ -130,8 +113,11 @@ export class NewSchedulePage {
       duration: 3000,
       position: 'top'
     });
-
     return toast.present();
+  }
+
+  ngOnDestroy() {
+    this.stopTimer();
   }
 
 }

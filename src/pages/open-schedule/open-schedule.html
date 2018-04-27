@@ -2,9 +2,9 @@
 
   <ion-navbar color="banana">
     <ion-buttons end>
-      <button ion-button icon-only>
+      <!-- <button ion-button icon-only>
         <ion-icon name="create"></ion-icon>
-      </button>
+      </button> -->
       <button *ngIf="data" ion-button icon-only (click)="deleteConfirm(data.id, data.title)">
         <ion-icon name="trash"></ion-icon>
       </button>
@@ -17,22 +17,33 @@
 
 </ion-header>
 
-<ion-content>
+<ion-content [ngStyle]="{'background-color': '#f4f8fb'}">
   <ion-toolbar color="banana"></ion-toolbar>
   <ion-toolbar color="banana"></ion-toolbar>
   <div *ngIf="data">
 
     <div padding class="cardbox">
+
+      <div class="endoftime" text-center text-capitalize>
+        {{ endof }} {{ timeup }}
+      </div>
+
       <ion-card margin-bottom>
-        <ion-card-content>
-          {{ data.body }}
+        <ion-card-content class="cardspace">
+          <h3 class="titlecard">Title: {{ data.title }}</h3>
+          <p>{{ data.body }}
+            <p>
         </ion-card-content>
       </ion-card>
+
       <ion-card>
-        <ion-card-content [ngStyle]="{'background-color': data.color}">
-          <div text-center class="cardDate">
-            {{ data.date | date:'EEEE, MMMM d' }}
-          </div>
+        <ion-card-content class="cardTime" text-center [ngStyle]="{'background-color': data.color}">
+          {{ date }}
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content class="card-color" [ngStyle]="{'background-color': data.color}">
           <div text-center class="cardTime">
             {{ data.date + 'T' + data.time | date:'h:mm a' }}
           </div>

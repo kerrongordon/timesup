@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavController, ModalController, IonicPage } from 'ionic-angular';
+import { NavController, ModalController, IonicPage, Platform } from 'ionic-angular';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
-import { ToastController } from 'ionic-angular';
-import { Schedule } from '../../interface/Schedule';
+import { Schedule, Item } from '../../interface/Schedule';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @IonicPage()
 @Component({
@@ -11,64 +11,74 @@ import { Schedule } from '../../interface/Schedule';
 })
 export class HomePage implements OnInit, OnDestroy{
 
-  isArchive: boolean;
   data: Schedule[];
-  color: string;
-  tabButton: string = 'schedule';
+  shouldShowCancel = true;
+  searchInput;
 
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
     private scheduleProv: ScheduleProvider,
-    public toastCtrl: ToastController
-  ) {
-
-  }
+    private plt: Platform,
+    private localNotifications: LocalNotifications,
+  ) {}
 
   ngOnInit() {
     this.loadData();
+    this.plt.is('cordova') ? this.getNotifData() : null;
   }
 
-  loadData() {
-    return this.scheduleProv.cast.subscribe(data => {
-      if (data === null ) return;
-
-      const groups = data.reduce((groups, item) => {
-        const date = item.date;
-        if (!groups[date]) { groups[date] = []; }
-        groups[date].push(item);
-        return groups;
-      }, {});
-
-      const groupArrays = Object.keys(groups).map((date) => {
-        return {
-          date,
-          items: groups[date]
-        };
-      });
-
-      return this.data = groupArrays.sort((a,b) => {
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
-      });
-
+  private getNotifData() {
+    return this.localNotifications.on('click').subscribe((data) => {
+      return this.navCtrl.push('OpenSchedulePage', { id: data.data.id });
     });
+  }
+
+  onSearch($event) {    
+    this.scheduleProv.cast.subscribe(data => {
+      if (data === null) return;
+      const searchOutput = data.filter((search) => {
+        return search.title.match(this.searchInput) || search.body.match(this.searchInput);
+      });
+      return this.dataFilter(searchOutput);
+    });
+
+  }
+
+  onSearchCancel($event) {
+    console.log($event);
   }
 
   addNewSchedule() {
-    let newScMod = this.modalCtrl.create('NewSchedulePage');
-    newScMod.present();
+    return this.modalCtrl.create('NewSchedulePage').present();
   }
 
-  presentToast(message: string) {
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000
+  private loadData() {
+    return this.scheduleProv.cast.subscribe(data => {
+      if (data === null ) return;
+      return this.dataFilter(data);
     });
-    toast.present();
+  }
+
+  private dataFilter(data:Item[]) {
+    const groups = data.reduce((groups, item) => {
+      groups[item.date] ? [] : groups[item.date] = [];
+      groups[item.date].push(item);
+      return groups;
+    }, {});
+
+    const groupArrays = Object.keys(groups).map((date) => {
+      return { date, items: groups[date] };
+    });
+
+    return this.data = groupArrays.sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
   }
 
   ngOnDestroy() {
     this.loadData().unsubscribe();
+    this.getNotifData().unsubscribe();
   }
 
 }

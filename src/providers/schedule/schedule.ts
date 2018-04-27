@@ -6,13 +6,13 @@ import { Item } from '../../interface/Schedule';
 @Injectable()
 export class ScheduleProvider {
 
+  removeItem: Item[];
   stream = new BehaviorSubject<Item[]>([]);
   cast = this.stream.asObservable();
 
   constructor(private storage: Storage) {
     this.loadDataBase();
   }
-
 
   loadDataBase() {
     return this.storage.get('schedules')
@@ -33,31 +33,15 @@ export class ScheduleProvider {
     let item = this.stream.getValue();
     return this.storage.get('schedules')
       .then((data: Item[]) => {
-        data.forEach((element, index) => {
-          element.id === id ? item.splice(index, 1) : null
-          return this.storage.set('schedules', item)
-            .then((e) => this.loadDataBase());
-        });
+        for (let i = 0; i < data.length; i++) {
+          data[i].id === id ? item.splice(i, 1) : null
+          this.removeItem = item;
+        }
+      }).then(() => {
+        return this.storage.set('schedules', this.removeItem)
+          .then((e) => this.stream.next(e));
       });
   }
-
-  // archiveSchedule(id: string) {
-  //   for (let i = 0; i < this.schedules.length; i++) {
-  //     if (this.schedules[i].id === id) {
-  //       this.schedules[i].isArchive = true;
-  //     }
-  //   }
-  //   return this.storage.set('schedules', this.schedules);
-  // }
-
-  // restoreItemSchedule(id: string) {
-  //   for (let i = 0; i < this.schedules.length; i++) {
-  //     if (this.schedules[i].id === id) {
-  //       this.schedules[i].isArchive = false;
-  //     }
-  //   }
-  //   return this.storage.set('schedules', this.schedules);
-  // }
 
   openSchedule(id: string) {
     return this.storage.get('schedules')

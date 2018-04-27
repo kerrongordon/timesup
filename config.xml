@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>timesUp</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+<widget id="io.kgp.timesup" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Time's Up</name>
+    <description>Manage your day to day Time</description>
+    <author email="kgpsounds.com@gmail.com" href="https://github.com/kerrongordon/timesup">Kerron Gordon</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -12,7 +12,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <preference name="ScrollEnabled" value="false" />
-    <preference name="android-minSdkVersion" value="19" />
+    <preference name="android-minSdkVersion" value="17" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
@@ -81,6 +81,12 @@
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.2.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <engine name="android" spec="~7.0.0" />
+    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
+    <allow-navigation href="http://192.168.1.3:8100" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
+    <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
     <plugin name="cordova-sqlite-storage" spec="^2.3.1" />
+    <engine name="android" spec="7.0.0" />
+    <engine name="browser" spec="5.0.3" />
 </widget>
