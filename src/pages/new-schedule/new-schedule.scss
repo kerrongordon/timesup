@@ -10,45 +10,46 @@ page-new-schedule {
   }
   .row-dots {
     text-align: center;
-    .dot {
-      height: 30px;
-      width: 30px;
-      border-radius: 50%;
-      margin: 10px auto;
-      position: relative;
-    }
   }
   .dot-strawberry {
-    background-color: color($colors, strawberry);
+    background-color: #c6262e;
   }
   .dot-orange {
-    background-color: color($colors, orange);
+    background-color: #f37329;
   }
   .dot-banana {
-    background-color: color($colors, banana);
+    background-color: #f9c440;
   }
   .dot-lime {
-    background-color: color($colors, lime);
+    background-color: #68b723;
   }
   .dot-blueberry {
-    background-color: color($colors, blueberry);
+    background-color: #3689e6;
   }
   .dot-grape {
-    background-color: color($colors, grape);
+    background-color: #7a36b1;
   }
   .dot-cocoa {
-    background-color: color($colors, cocoa);
+    background-color: #715344;
   }
   .dot-slate {
-    background-color: color($colors, slate);
+    background-color: #485a6c;
+  }
+  .dot-silver {
+    background-color: #abacae;
   }
   .dot {
     border: 3px solid $list-md-border-color;
   }
-
-  .dot .activated {
-    border: 5px solid $list-md-border-color;
+  .dot {
+    height: 25px;
+    width: 25px;
+    display: block;
+    border-radius: 50%;
+    margin: 10px;
+    overflow: hidden;
   }
-
-
+  .dot-item {
+    width: 100px;
+  }
 }

@@ -11,5 +11,7 @@ export interface Item {
     color: string,
     id: string | Int32Array,
     isArchive: boolean,
-    isDone: boolean
+    isDone: boolean,
+    dateAdded: string,
+    dateSet: string,
 }

@@ -2,17 +2,21 @@
   <ion-toolbar color="banana">
     <ion-title>Time's Up</ion-title>
   </ion-toolbar>
+  <ion-toolbar color="banana">
+    <ion-searchbar [(ngModel)]="searchInput" [showCancelButton]="shouldShowCancel" (ionInput)="onSearch($event)" (ionCancel)="onSearchCancel($event)">
+    </ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-list *ngIf="data">
-    <ion-item-group *ngFor="let item of data">
-      <schedule-item [date]="item.date" [items]="item.items"></schedule-item>
-    </ion-item-group>
-  </ion-list>
-
   <div *ngIf="data">
+    <ion-list>
+      <ion-item-group *ngFor="let item of data">
+        <schedule-item [date]="item.date" [items]="item.items"></schedule-item>
+      </ion-item-group>
+    </ion-list>
+
     <div *ngIf="data.length === 0">
       <div text-center class="nocontent">
         <ion-icon name="alert"></ion-icon>
@@ -23,7 +27,7 @@
 
   <ion-fab right bottom>
     <button ion-fab icon-only (click)="addNewSchedule()">
-      <ion-icon name="add"></ion-icon>
+      <ion-icon name="create"></ion-icon>
     </button>
   </ion-fab>
 
