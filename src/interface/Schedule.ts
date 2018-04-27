@@ -15,3 +15,11 @@ export interface Item {
     dateAdded: string,
     dateSet: string,
 }
+
+export interface InputData {
+    title: string,
+    body: string,
+    date: string,
+    time: string,
+    color: string,
+}

@@ -21,7 +21,7 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       if (platform.is('cordova')) {
-        statusBar.styleBlackTranslucent();
+        statusBar.styleDefault();
         statusBar.backgroundColorByHexString(this.color);
         headerColor.tint(this.color);
         splashScreen.hide();
