@@ -1,5 +1,4 @@
 <ion-header>
-
   <ion-toolbar color="banana">
     <ion-title>New Schedule</ion-title>
     <ion-buttons end>
@@ -8,9 +7,7 @@
       </button>
     </ion-buttons>
   </ion-toolbar>
-
 </ion-header>
-
 
 <ion-content padding>
 
@@ -18,16 +15,16 @@
 
     <ion-item>
       <ion-label floating>Title</ion-label>
-      <ion-input type="text" required [(ngModel)]="data.title" name="title"></ion-input>
+      <ion-input type="text" required name="title" ngModel></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Description</ion-label>
-      <ion-textarea class="boxh" type="text" required [(ngModel)]="data.body" name="body"></ion-textarea>
+      <ion-textarea class="boxh" type="text" required name="body" ngModel></ion-textarea>
     </ion-item>
 
     <ion-list-header text-center no-lines padding-top>
-      Pick a Starting Date & Time
+      Date & Time
     </ion-list-header>
 
     <ion-grid no-padding>
@@ -35,46 +32,22 @@
         <ion-col col-8>
           <ion-item>
             <ion-label>Date</ion-label>
-            <ion-datetime no-padding displayFormat="DDDD MMM D, YYYY" [min]="limDate" name="date" [(ngModel)]="data.date" required></ion-datetime>
+            <ion-datetime no-padding displayFormat="DDDD MMM D, YYYY" [min]="limDate" name="date" ngModel required></ion-datetime>
           </ion-item>
         </ion-col>
 
         <ion-col col-4>
           <ion-item no-padding>
             <ion-label>Time</ion-label>
-            <ion-datetime no-padding displayFormat="h:mm A" pickerFormat="h:mm A" [min]="limTime" name="time" [(ngModel)]="data.time" required></ion-datetime>
+            <ion-datetime no-padding displayFormat="h:mm A" pickerFormat="h:mm A" name="time" ngModel required></ion-datetime>
           </ion-item>
         </ion-col>
       </ion-row>
     </ion-grid>
-
-    <ion-list-header text-center no-lines padding-top>
-       Pick a Ending Date & Time
-    </ion-list-header>
-
-    <ion-grid no-padding>
-      <ion-row>
-        <ion-col col-8>
-          <ion-item>
-            <ion-label>Date</ion-label>
-            <ion-datetime no-padding displayFormat="DDDD MMM D, YYYY" [min]="limDate" name="date" [(ngModel)]="data.date" required></ion-datetime>
-          </ion-item>
-        </ion-col>
-
-        <ion-col col-4>
-          <ion-item no-padding>
-            <ion-label>Time</ion-label>
-            <ion-datetime no-padding displayFormat="h:mm A" pickerFormat="h:mm A" [min]="limTime" name="time" [(ngModel)]="data.time" required></ion-datetime>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-
 
     <div padding></div>
 
-    <ion-list radio-group>
+    <ion-list radio-group name="color" ngModel>
 
       <ion-list-header text-center no-lines>
         Pick a Color

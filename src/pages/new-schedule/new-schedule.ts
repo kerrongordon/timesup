@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { ViewController, ToastController, IonicPage, Platform } from 'ionic-angular';
 import { Md5 } from 'ts-md5/dist/md5';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
-import { Item } from '../../interface/Schedule';
+import { Item, InputData } from '../../interface/Schedule';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import * as moment from 'moment';
@@ -14,22 +14,8 @@ import * as moment from 'moment';
 })
 export class NewSchedulePage implements OnDestroy {
 
-  data = {
-    title: '',
-    body: '',
-    date: '',
-    time: '',
-    date_group: {
-      start_date: '',
-      start_time: '',
-      end_date: '',
-      end_time: ''
-    }
-  }
-
   timer: number;
   times: string;
-  limTime: string;
   limDate: string;
   color: string = '#3689e6';
 
@@ -39,8 +25,7 @@ export class NewSchedulePage implements OnDestroy {
     private toastCtrl: ToastController,
     private localNotifications: LocalNotifications,
     private plt: Platform
-  ) {
-  }
+  ) {}
 
   ionViewDidLoad() {
     this.limitDateTime();
@@ -55,15 +40,10 @@ export class NewSchedulePage implements OnDestroy {
   }
 
   limitDateTime() {
-    this.limDate = moment().format('YYYY-MM-DD');
-    console.log(this.limDate);
-    return this.timer = setInterval(() => {
-      this.limTime = moment().add(1, 'm').format('hh:mm');
-    }, 1000);
+    return this.limDate = moment().format('YYYY-MM-DD');
   }
  
   notifi(id:string | Int32Array, title:string, time:string ) {
-    return this.plt.ready().then(() => {
       if (this.plt.is('cordova')) {
         const toDate = new Date(time);
         const idToNub = Number(id);
@@ -76,13 +56,12 @@ export class NewSchedulePage implements OnDestroy {
           data: { id: id }
         });
       }
-    });
   }
 
   onCreateSchedule(e) {
-    // if (!e.valid) return;
+    if (!e.valid) return;
     const hash = Md5.hashStr( moment().format() );
-    const data: Item = e.value;
+    const data: InputData = e.value;
     const getTime = data.time;
     const geth = parseInt(getTime.substring(0,2));
     const getm = parseInt(getTime.substring(3,5));
@@ -97,7 +76,7 @@ export class NewSchedulePage implements OnDestroy {
       body: data.body,
       date: data.date,
       time: data.time,
-      color: this.color,
+      color: data.color === '' ? this.color : data.color,
       isArchive: false,
       isDone: false,
       dateAdded: addDate,
@@ -106,7 +85,7 @@ export class NewSchedulePage implements OnDestroy {
 
     this.notifi(hash, data.title, setDate);
     this.scheduleProv.addSchedule(newData);
-    // return this.dismiss();
+    return this.dismiss();
   }
 
   dismiss() {
