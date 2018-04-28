@@ -11,7 +11,6 @@ import * as moment from 'moment';
 })
 export class OpenSchedulePage  {
 
-  timer: number;
   data: Item;
   date: string;
   getId: string;
@@ -34,7 +33,7 @@ export class OpenSchedulePage  {
   getDate() {
     if (!this.data) return;
     this.date = moment(this.data.date).format('dddd MMMM Do YYYY');
-    return this.endof = moment(this.data.dateSet).endOf('day').fromNow();
+    return this.endof = moment(`${this.data.date}T${this.data.time}`).endOf('minute').fromNow();
   }
 
   loadData() {

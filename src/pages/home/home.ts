@@ -3,14 +3,19 @@ import { NavController, ModalController, IonicPage, Platform } from 'ionic-angul
 import { ScheduleProvider } from '../../providers/schedule/schedule';
 import { Schedule, Item } from '../../interface/Schedule';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { Subscription } from 'rxjs/Subscription';
 
-@IonicPage()
+@IonicPage({
+  name: 'HomePage',
+  priority: 'high'
+})
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
 })
-export class HomePage implements OnInit, OnDestroy{
+export class HomePage implements OnInit, OnDestroy {
 
+  notify: Subscription;
   data: Schedule[];
   shouldShowCancel = true;
   searchInput;
@@ -21,20 +26,24 @@ export class HomePage implements OnInit, OnDestroy{
     private scheduleProv: ScheduleProvider,
     private plt: Platform,
     private localNotifications: LocalNotifications,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadData();
-    this.plt.is('cordova') ? this.getNotifData() : null;
+    this.getNotifData();
   }
 
   private getNotifData() {
-    return this.localNotifications.on('click').subscribe((data) => {
-      return this.navCtrl.push('OpenSchedulePage', { id: data.data.id });
+    return this.plt.ready().then(() => {
+      if (this.plt.is('cordova')) {
+        this.notify = this.localNotifications.on('click').subscribe((data) => {
+          return this.navCtrl.push('OpenSchedulePage', { id: data.data.id });
+        });
+      }
     });
   }
 
-  onSearch($event) {    
+  onSearch($event) {
     this.scheduleProv.cast.subscribe(data => {
       if (data === null) return;
       const searchOutput = data.filter((search) => {
@@ -55,12 +64,12 @@ export class HomePage implements OnInit, OnDestroy{
 
   private loadData() {
     return this.scheduleProv.cast.subscribe(data => {
-      if (data === null ) return;
+      if (data === null) return;
       return this.dataFilter(data);
     });
   }
 
-  private dataFilter(data:Item[]) {
+  private dataFilter(data: Item[]) {
     const groups = data.reduce((groups, item) => {
       groups[item.date] ? [] : groups[item.date] = [];
       groups[item.date].push(item);
@@ -78,7 +87,7 @@ export class HomePage implements OnInit, OnDestroy{
 
   ngOnDestroy() {
     this.loadData().unsubscribe();
-    this.getNotifData().unsubscribe();
+    this.notify.unsubscribe();
   }
 
 }
