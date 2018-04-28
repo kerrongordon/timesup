@@ -15,7 +15,6 @@ export class OpenSchedulePage  {
   date: string;
   getId: string;
   endof: string;
-  timeup: string;
 
   constructor(
     public navCtrl: NavController,
@@ -42,8 +41,7 @@ export class OpenSchedulePage  {
     }
     return this.scheduleProv.openSchedule(this.getId)
       .then(data => this.data = data[0])
-      .then(() => this.getDate())
-      .then(() => this.endof.match('ago') ? this.timeup = `Time's Up` : '');
+      .then(() => this.getDate());
   }
 
   deleteItem(id: string) {

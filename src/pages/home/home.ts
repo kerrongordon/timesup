@@ -54,10 +54,6 @@ export class HomePage implements OnInit, OnDestroy {
 
   }
 
-  onSearchCancel($event) {
-    console.log($event);
-  }
-
   addNewSchedule() {
     return this.modalCtrl.create('NewSchedulePage').present();
   }
@@ -85,9 +81,13 @@ export class HomePage implements OnInit, OnDestroy {
     });
   }
 
+  killNotify() {
+    return this.plt.ready().then(() => this.notify === undefined ? undefined : this.notify.unsubscribe());
+  }
+
   ngOnDestroy() {
     this.loadData().unsubscribe();
-    this.notify.unsubscribe();
+    this.killNotify();
   }
 
 }
