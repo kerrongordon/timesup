@@ -7,7 +7,10 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import * as moment from 'moment';
 
-@IonicPage()
+@IonicPage({
+  name: 'NewSchedulePage',
+  priority: 'high'
+})
 @Component({
   selector: 'page-new-schedule',
   templateUrl: 'new-schedule.html',
@@ -50,12 +53,20 @@ export class NewSchedulePage implements OnDestroy {
         return this.localNotifications.schedule({
           id: idToNub,
           text: title,
-          sound: this.plt.is('android') ? 'file://assets/sound/sound.mp3' : 'file://assets/sound/sound.caf',
+          sound: this.setSound(),
           icon: 'file://assets/imgs/logo.png',
           trigger: { at: toDate },
           data: { id: id }
         });
       }
+  }
+
+  setSound() {
+    if (this.plt.is('android')) {
+      return 'file://assets/sound/sound.mp3'
+    } else {
+      return 'file://assets/sound/sound.caf'
+    }
   }
 
   onCreateSchedule(e) {

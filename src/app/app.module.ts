@@ -18,7 +18,9 @@ import { ScheduleProvider } from '../providers/schedule/schedule';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      preloadModules: true
+    }),
     IonicStorageModule.forRoot({
       name: 'timesup',
       storeName: 'timesupDB',
