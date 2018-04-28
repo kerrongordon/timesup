@@ -54,6 +54,8 @@ export class NewSchedulePage implements OnDestroy {
           id: idToNub,
           text: title,
           sound: this.setSound(),
+          vibrate: true,
+          color: '#f9c440',
           icon: 'file://assets/imgs/logo.png',
           trigger: { at: toDate },
           data: { id: id }
