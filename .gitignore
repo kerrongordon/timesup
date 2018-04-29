@@ -9,9 +9,12 @@
 log.txt
 *.sublime-project
 *.sublime-workspace
+*.directory
+*.keystore
 .vscode/
 npm-debug.log*
 
+apk/
 .idea/
 .sourcemaps/
 .sass-cache/
