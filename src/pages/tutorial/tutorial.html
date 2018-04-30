@@ -1,7 +1,7 @@
 <ion-header no-border>
   <ion-navbar>
     <ion-buttons end *ngIf="showSkip">
-      <button ion-button (click)="startApp()" color="banana">Skip</button>
+      <button ion-button (click)="startApp()" color="primary">Skip</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -10,42 +10,65 @@
   <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager>
 
     <ion-slide>
-      <img src="assets/imgs/ica-slidebox-img-1.png" class="slide-image" />
-      <h2 class="slide-title">
-        Welcome to Time's Up
-      </h2>
-      <p>
-        The <b>Time's Up app</b> was made to help studens with time management for school.
-      </p>
+      <ion-row justify-content-center>
+        <ion-col align-self-center>
+          <img src="assets/imgs/ica-slidebox-img-1.png" class="slide-image" />
+          <h2 class="slide-title">
+            Welcome to Time's Up
+          </h2>
+          <p>
+            The
+            <b>Time's Up app</b> was made to help studens with time management for school.
+          </p>
+        </ion-col>
+      </ion-row>
     </ion-slide>
 
     <ion-slide>
-      <img src="assets/imgs/ica-slidebox-img-2.png" class="slide-image" />
-      <h2 class="slide-title">New Schedule</h2>
-      <p>
-        Adding <b>New Schedule</b> is very easy with one simple tap of the blue button add a title description date and time and a custom color.
-      </p>
+      <ion-row justify-content-center>
+        <ion-col align-self-center>
+          <img src="assets/imgs/ica-slidebox-img-2.png" class="slide-image" />
+          <h2 class="slide-title">New Schedule</h2>
+          <p>
+            Adding
+            <b>New Schedule</b> is very easy with one simple tap of the blue button add a title description date and time and
+            a custom color.
+          </p>
+        </ion-col>
+      </ion-row>
     </ion-slide>
 
     <ion-slide>
-      <img src="assets/imgs/ica-slidebox-img-3.png" class="slide-image" />
-      <h2 class="slide-title">Notifications</h2>
-      <p>
-        Get <b>Notify</b> once a schedule is ready you can tap on the notification to go right to the schedule to get more information.
-      </p>
+      <ion-row justify-content-center>
+        <ion-col align-self-center>
+          <img src="assets/imgs/ica-slidebox-img-3.png" class="slide-image" />
+          <h2 class="slide-title">Notifications</h2>
+          <p>
+            Get
+            <b>Notify</b> once a schedule is ready you can tap on the notification to go right to the schedule to get more information.
+          </p>
+        </ion-col>
+      </ion-row>
     </ion-slide>
 
     <ion-slide>
-      <img src="assets/imgs/ica-slidebox-img-4.png" class="slide-image" />
-      <h2 class="slide-title">Search</h2>
-      <p>You can <b>Search</b> for all you schedules fast and easy and swipe left to delete them or tap to open a schedule.</p>
+      <ion-row justify-content-center>
+        <ion-col align-self-center>
+          <img src="assets/imgs/ica-slidebox-img-4.png" class="slide-image" />
+          <h2 class="slide-title">Search</h2>
+          <p>You can
+            <b>Search</b> for all you schedules fast and easy and swipe left to delete them or tap to open a schedule.</p>
+        </ion-col>
+      </ion-row>
     </ion-slide>
 
     <ion-slide>
-      <button ion-button icon-end large color="banana" (click)="startApp()" [ngStyle]="{'margin-top': '60%'}">
-         Get Started
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
+      <div class="centerbtn">
+        <button ion-button icon-end clear large (click)="startApp()">
+          Get Started
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </div>
     </ion-slide>
 
   </ion-slides>
