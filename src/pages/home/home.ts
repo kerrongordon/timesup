@@ -31,7 +31,7 @@ export class HomePage implements OnInit, OnDestroy {
   ) { 
     this.events.subscribe('status:delete', (id, title) => { 
       const infor = {id, title}; 
-      this.onDelete(infor);
+      return this.onDelete(infor);
     });
   }
 
@@ -45,7 +45,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   onDelete(event) {
-    return this.alertCtrl.create({
+    const alertCtrl = this.alertCtrl.create({
       title: 'Confirm Delete',
       message: `Are you sure you what to delete ${event.title}`,
       buttons: [
@@ -59,12 +59,13 @@ export class HomePage implements OnInit, OnDestroy {
           handler: () => { 
             this.scheduleProv.removeSchedule(event.id)
               .then(() => {
-                this.navCtrl.getActive().name !== 'HomePage' ? this.navCtrl.push('HomePage') : null
+                this.navCtrl.getActive().name !== 'HomePage' ? this.navCtrl.pop() : null
               });
           }
         }
       ]
-    }).present()
+    });
+    return alertCtrl.present();
   }
 
   private getNotifData() {
