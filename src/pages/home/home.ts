@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavController, ModalController, IonicPage, Platform, AlertController, Events } from 'ionic-angular';
+import { NavController, ModalController, IonicPage, Platform, AlertController } from 'ionic-angular';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
 import { Schedule, Item } from '../../interface/Schedule';
 import { LocalNotifications } from '@ionic-native/local-notifications';
@@ -15,10 +15,12 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class HomePage implements OnInit, OnDestroy {
 
+  searchInput: any;
+  deleteId: any;
   notify: Subscription;
   data: Schedule[];
   shouldShowCancel = true;
-  searchInput;
+  loaddata: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -27,13 +29,7 @@ export class HomePage implements OnInit, OnDestroy {
     private plt: Platform,
     private alertCtrl: AlertController,
     private localNotifications: LocalNotifications,
-    public events: Events
-  ) { 
-    this.events.subscribe('status:delete', (id, title) => { 
-      const infor = {id, title}; 
-      return this.onDelete(infor);
-    });
-  }
+  ) { }
 
   ngOnInit() {
     this.loadData();
@@ -44,28 +40,8 @@ export class HomePage implements OnInit, OnDestroy {
     return this.navCtrl.push('OpenSchedulePage', { data: event });
   }
 
-  onDelete(event) {
-    const alertCtrl = this.alertCtrl.create({
-      title: 'Confirm Delete',
-      message: `Are you sure you what to delete ${event.title}`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => { event.slidingItem ? event.slidingItem.close() : null }
-        },
-        {
-          text: 'Delete',
-          handler: () => { 
-            this.scheduleProv.removeSchedule(event.id)
-              .then(() => {
-                this.navCtrl.getActive().name !== 'HomePage' ? this.navCtrl.pop() : null
-              });
-          }
-        }
-      ]
-    });
-    return alertCtrl.present();
+  willDelete(event) {
+    return this.scheduleProv.removeSchedule(event);
   }
 
   private getNotifData() {
@@ -95,7 +71,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   private loadData() {
     return this.scheduleProv.cast.subscribe(data => {
-      if (data === null) return;
+      data.length === 0 ? this.loaddata = true : this.loaddata = false;
       return this.dataFilter(data);
     });
   }
@@ -120,10 +96,30 @@ export class HomePage implements OnInit, OnDestroy {
     return this.plt.ready().then(() => this.notify === undefined ? undefined : this.notify.unsubscribe());
   }
 
+  onDelete(event) {
+    const alertCtrl = this.alertCtrl.create({
+      title: 'Confirm Delete',
+      message: `Are you sure you what to delete ${event.title}`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => { event.slidingItem.close() }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.willDelete(event.id);
+          }
+        }
+      ]
+    });
+    return alertCtrl.present();
+  }
+
   ngOnDestroy() {
     this.loadData().unsubscribe();
     this.killNotify();
-    this.events.unsubscribe('status:delete');
   }
 
 }

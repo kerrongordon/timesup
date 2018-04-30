@@ -6,11 +6,13 @@ import { Item } from '../../interface/Schedule';
 @Injectable()
 export class ScheduleProvider {
 
-  schedules: Item[] = [];
+  schedules: Item[];
   stream = new BehaviorSubject<Item[]>([]);
   cast = this.stream.asObservable();
 
-  constructor(private storage: Storage) {
+  constructor(
+    private storage: Storage,
+  ) {
     this.loadDataBase();
   }
 
@@ -20,7 +22,7 @@ export class ScheduleProvider {
   }
 
   addSchedule(newitem: Item) {
-    this.schedules = this.stream.getValue();
+    this.stream.getValue() === null ? this.schedules = [] : this.schedules = this.stream.getValue();
     this.schedules.push(newitem);
     this.stream.next(this.schedules);
     return this.storage.set('schedules', this.schedules);

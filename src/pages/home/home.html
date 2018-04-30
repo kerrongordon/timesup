@@ -10,7 +10,7 @@
 
 <ion-content>
 
-  <ng-container *ngIf="data?.length > 0; else nodata">
+  <ng-container *ngIf="data">
     <ion-list>
       <ion-item-group *ngFor="let item of data">
         <schedule-item [date]="item.date" [items]="item.items" (open)="onOpen($event)" (delete)="onDelete($event)"></schedule-item>
@@ -18,12 +18,14 @@
     </ion-list>
   </ng-container>
 
-  <ng-template #nodata>
+  <ng-container *ngIf="loaddata">
     <div text-center class="nocontent">
-      <ion-icon name="alert"></ion-icon>
-      <h3>No Schedule</h3>
+      <div>
+        <ion-icon name="alert"></ion-icon>
+        <h3>No Schedule</h3>
+      </div>
     </div>
-  </ng-template>
+  </ng-container>
 
   <ion-fab right bottom>
     <button ion-fab icon-only (click)="addNewSchedule()">
