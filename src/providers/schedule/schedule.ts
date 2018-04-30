@@ -6,7 +6,7 @@ import { Item } from '../../interface/Schedule';
 @Injectable()
 export class ScheduleProvider {
 
-  removeItem: Item[];
+  schedules: Item[];
   stream = new BehaviorSubject<Item[]>([]);
   cast = this.stream.asObservable();
 
@@ -20,27 +20,16 @@ export class ScheduleProvider {
   }
 
   addSchedule(newitem: Item) {
-    return this.storage.get('schedules')
-      .then((data: Item[]) => {
-        const d = data == null ? [] : data
-        d.push(newitem)
-        return this.storage.set('schedules', d)
-          .then((e) => this.stream.next(e));
-      });
+    this.schedules = this.stream.getValue();
+    this.schedules.push(newitem);
+    this.stream.next(this.schedules);
+    return this.storage.set('schedules', this.schedules);
   }
 
   removeSchedule(id: string) {
-    let item = this.stream.getValue();
-    return this.storage.get('schedules')
-      .then((data: Item[]) => {
-        for (let i = 0; i < data.length; i++) {
-          data[i].id === id ? item.splice(i, 1) : null
-          this.removeItem = item;
-        }
-      }).then(() => {
-        return this.storage.set('schedules', this.removeItem)
-          .then((e) => this.stream.next(e));
-      });
+    this.schedules = this.stream.getValue().filter(data => data.id !== id);
+    this.stream.next(this.schedules);
+    return this.storage.set('schedules', this.schedules);
   }
 
   openSchedule(id: string) {

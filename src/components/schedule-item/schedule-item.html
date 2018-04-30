@@ -5,14 +5,14 @@
 <ng-container *ngFor="let item of items">
   <ion-item-sliding #slidingItem [ngStyle]="{'border-color': item.color, 'background-color': '#f53d3d'}">
 
-    <button ion-item (click)="openItemPage(item.id)">
+    <button ion-item (click)="openItemPage(item)">
       <h3>{{ item.title | titlecase }}</h3>
       <p>{{ item.body | titlecase }}</p>
       <ion-note item-end color="primary">{{ item.date + 'T' + item.time | date:'h:mm a' }}</ion-note>
     </button>
 
-    <ion-item-options side="right" color="danger" (ionSwipe)="deleteConfirm(item.id, item.title, slidingItem)">
-      <button ion-button color="danger" (click)="deleteConfirm(item.id, item.title, slidingItem)">
+    <ion-item-options side="right" color="danger" (ionSwipe)="deleteItem(item.id, item.title, slidingItem)">
+      <button ion-button color="danger" (click)="deleteItem(item.id, item.title, slidingItem)">
         <ion-icon name="trash"></ion-icon>
         Delete
       </button>

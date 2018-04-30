@@ -13,7 +13,7 @@
   <ng-container *ngIf="data?.length > 0; else nodata">
     <ion-list>
       <ion-item-group *ngFor="let item of data">
-        <schedule-item [date]="item.date" [items]="item.items"></schedule-item>
+        <schedule-item [date]="item.date" [items]="item.items" (open)="onOpen($event)" (delete)="onDelete($event)"></schedule-item>
       </ion-item-group>
     </ion-list>
   </ng-container>

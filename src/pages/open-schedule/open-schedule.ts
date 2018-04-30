@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, IonicPage, AlertController } from 'ionic-angular';
-import { ScheduleProvider } from '../../providers/schedule/schedule';
+import { NavParams, IonicPage, Events } from 'ionic-angular';
 import { Item } from '../../interface/Schedule';
 import * as moment from 'moment';
 
@@ -13,20 +12,17 @@ export class OpenSchedulePage  {
 
   data: Item;
   date: string;
-  getId: string;
   endof: string;
 
   constructor(
-    public navCtrl: NavController,
     public navParams: NavParams,
-    private scheduleProv: ScheduleProvider,
-    private alertCtrl: AlertController
+    public events: Events,
   ) {
-    this.getId = this.navParams.data.id
+    this.data = this.navParams.data.data
   }
 
   ionViewDidLoad() {
-   this.loadData();
+    this.getDate();
   }
 
   getDate() {
@@ -35,39 +31,8 @@ export class OpenSchedulePage  {
     return this.endof = moment(`${this.data.date}T${this.data.time}`).endOf('minute').fromNow();
   }
 
-  loadData() {
-    if (!this.getId) {
-        return this.navCtrl.push('HomePage');
-    }
-    return this.scheduleProv.openSchedule(this.getId)
-      .then(data => this.data = data[0])
-      .then(() => this.getDate());
-  }
-
-  deleteItem(id: string) {
-    return this.scheduleProv.removeSchedule(id)
-      .then(() => this.navCtrl.push('HomePage'));
-  }
-
-  deleteConfirm(id: string, title: string) {
-    let alert = this.alertCtrl.create({
-      title: 'Confirm delete',
-      message: `Are you sure you what to delete ${title}`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => { }
-        },
-        {
-          text: 'Delete',
-          handler: () => {
-            this.deleteItem(id);
-          }
-        }
-      ]
-    });
-    alert.present();
+  deleteItem(id: string, title: string) {
+    return this.events.publish('status:delete', id, title);
   }
 
 }

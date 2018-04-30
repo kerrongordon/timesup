@@ -2,10 +2,7 @@
 
   <ion-navbar color="banana">
     <ion-buttons end>
-      <!-- <button ion-button icon-only>
-        <ion-icon name="create"></ion-icon>
-      </button> -->
-      <button *ngIf="data" ion-button icon-only (click)="deleteConfirm(data.id, data.title)">
+      <button *ngIf="data" ion-button icon-only (click)="deleteItem(data.id, data.title)">
         <ion-icon name="trash"></ion-icon>
       </button>
     </ion-buttons>
