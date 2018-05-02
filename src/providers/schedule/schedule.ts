@@ -6,7 +6,7 @@ import { Item } from '../../interface/Schedule';
 @Injectable()
 export class ScheduleProvider {
 
-  schedules: Item[];
+  schedules: Item[] = [];
   stream = new BehaviorSubject<Item[]>([]);
   cast = this.stream.asObservable();
 

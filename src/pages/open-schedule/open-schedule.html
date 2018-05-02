@@ -1,5 +1,4 @@
-<ion-header no-border>
-
+<ion-header>
   <ion-navbar color="banana">
     <ion-buttons end>
       <button *ngIf="data" ion-button icon-only (click)="deleteItem(data)">
@@ -7,48 +6,33 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-
   <ion-toolbar color="banana" text-center>
-    <ion-title text-capitalize *ngIf="data">{{ data.title }}</ion-title>
+    <ion-title text-capitalize>{{ endof }}</ion-title>
   </ion-toolbar>
-
 </ion-header>
 
-<ion-content [ngStyle]="{'background-color': '#f4f8fb'}">
-  <ion-toolbar color="banana"></ion-toolbar>
-  <ion-toolbar color="banana"></ion-toolbar>
+<ion-content [ngStyle]="{'background': imageTimebk,'background-color': '#f4f8fb'}">
+
   <div *ngIf="data">
 
-    <div padding class="cardbox">
-
-      <div class="endoftime" text-center text-capitalize>
-        {{ endof }}
-      </div>
-
-      <ion-card margin-bottom>
-        <ion-card-content class="cardspace">
-          <h3 class="titlecard">Title: {{ data.title }}</h3>
+    <div padding class="cardbox" @explainerAnim>
+      <ion-title text-center text-capitalize padding class="greeting anim">good {{ greeting }}</ion-title>
+      <ion-card class="maincard anim" margin-bottom>
+        <ion-card-content class="cardspace animt">
+          <h3 class="titlecard"><ion-icon name="bookmark" item-start></ion-icon>  Title: {{ data.title }}</h3>
+          <h3 class="titlecard"><ion-icon name="time" item-start></ion-icon> Added: {{ data.dateAdded | date }}</h3>
           <p>{{ data.body }}
             <p>
         </ion-card-content>
       </ion-card>
-
-      <ion-card>
-        <ion-card-content class="cardTime" text-center [ngStyle]="{'background-color': data.color}">
-          {{ date }}
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card>
-        <ion-card-content class="card-color" [ngStyle]="{'background-color': data.color}">
-          <div text-center class="cardTime">
-            {{ data.date + 'T' + data.time | date:'h:mm a' }}
-          </div>
-        </ion-card-content>
-      </ion-card>
-
+      <div class="card-background-page">
+        <ion-card class="anim"> 
+          <img [src]="imageTime" />
+          <div class="card-title animt">{{ data.date + 'T' + data.time | date:'h:mm a' }}</div>
+          <div class="card-subtitle animt">{{ date }}</div>
+        </ion-card>
+      </div>
     </div>
-
 
   </div>
 </ion-content>

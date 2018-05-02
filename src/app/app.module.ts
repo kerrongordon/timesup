@@ -10,6 +10,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 import { MyApp } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
 import { ScheduleProvider } from '../providers/schedule/schedule';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ScheduleProvider } from '../providers/schedule/schedule';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(MyApp, {
       preloadModules: true
     }),

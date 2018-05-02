@@ -1,6 +1,5 @@
 page-open-schedule {
   .cardbox {
-    margin-top: -90px !important;
     position: relative;
     z-index: 100;
   }
@@ -15,11 +14,6 @@ page-open-schedule {
   .card-color {
     background-color: #2cc6d6;
   }
-  .endoftime {
-    font-size: 2em;
-    margin-bottom: 1em;
-    color: #424242;
-  }
   .titlecard {
     margin-bottom: 1em;
     padding-bottom: 1em;
@@ -29,4 +23,40 @@ page-open-schedule {
   .cardspace {
     padding: 40px 16px;
   }
+  .card-background-page {
+    ion-card {
+      position: relative;
+      text-align: center;
+    }
+    .card-title {
+      position: absolute;
+      top: 36%;
+      font-size: 2.0em;
+      width: 100%;
+      font-weight: bold;
+      color: #fff;
+    }
+    .card-subtitle {
+      font-size: 1.0em;
+      position: absolute;
+      top: 52%;
+      width: 100%;
+      color: #fff;
+    }
+  }
+  .greeting {
+    
+    .toolbar-title-md {
+      color: #fff;
+    }
+  }
+  .maincard {
+    background: rgba(255, 255, 255, 0.81)
+  }
+
+  ion-header,
+  ion-title {
+    transition: all .3s ease-in-out;
+  }
+
 }

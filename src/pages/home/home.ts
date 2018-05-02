@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController, IonicPage, Platform, AlertController } from 'ionic-angular';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
 import { Schedule, Item } from '../../interface/Schedule';
@@ -13,14 +13,13 @@ import { Subscription } from 'rxjs/Subscription';
   selector: 'page-home',
   templateUrl: 'home.html',
 })
-export class HomePage implements OnInit, OnDestroy {
+export class HomePage implements OnInit {
 
   searchInput: any;
   deleteId: any;
   notify: Subscription;
   data: Schedule[];
   shouldShowCancel = true;
-  loaddata: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -71,7 +70,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   private loadData() {
     return this.scheduleProv.cast.subscribe(data => {
-      data.length === 0 ? this.loaddata = true : this.loaddata = false;
+      if (data === null) return;
       return this.dataFilter(data);
     });
   }
@@ -117,7 +116,7 @@ export class HomePage implements OnInit, OnDestroy {
     return alertCtrl.present();
   }
 
-  ngOnDestroy() {
+  ionViewDidLeave() {
     this.loadData().unsubscribe();
     this.killNotify();
   }
