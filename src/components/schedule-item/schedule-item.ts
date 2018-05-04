@@ -1,18 +1,17 @@
-import { Component, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { Item } from '../../interface/Schedule';
 import { ItemSliding } from 'ionic-angular';
 
 @Component({
   selector: 'schedule-item',
-  templateUrl: 'schedule-item.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: 'schedule-item.html'
 })
 export class ScheduleItemComponent {
 
   @Input() date: string;
   @Input() items: Item;
 
-  @Output() open: EventEmitter<any> = new EventEmitter();
+  @Output() open: EventEmitter<Item> = new EventEmitter();
   @Output() delete: EventEmitter<any> = new EventEmitter();
 
   constructor() {}

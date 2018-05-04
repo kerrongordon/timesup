@@ -47,7 +47,7 @@ export class HomePage implements OnInit {
     return this.plt.ready().then(() => {
       if (this.plt.is('cordova')) {
         this.notify = this.localNotifications.on('click').subscribe((data) => {
-          return this.navCtrl.push('OpenSchedulePage', { id: data.data.id });
+          return this.navCtrl.push('OpenSchedulePage', { data: data.data.info });
         });
       }
     });

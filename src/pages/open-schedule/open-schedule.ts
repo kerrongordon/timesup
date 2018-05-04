@@ -16,16 +16,11 @@ import { trigger, style, transition, animate, query, stagger } from '@angular/an
         query('.animt', style({ opacity: 0, transform: 'translateX(-40px)' })),
 
         query('.anim', stagger('300ms', [
-          animate('600ms .5s ease', style({ opacity: 1, transform: 'translateX(0)' })),
+          animate('300ms .5s ease', style({ opacity: 1, transform: 'translateX(0)' })),
         ])),
-        query('.animt', stagger('300ms', [
-          animate('500ms 0.5s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
+        query('.animt', stagger('100ms', [
+          animate('500ms ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
         ])),
-
-        // query('.anim', [
-        //   animate(1000, style('*'))
-        // ])
-
       ])
     ])
   ]
@@ -74,13 +69,13 @@ export class OpenSchedulePage  {
 
   getGreetingTime (m) {
 	var g = null; //return g
-	
+
 	if(!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
-	
+
 	var split_afternoon = 12 //24hr time to split the afternoon
 	var split_evening = 17 //24hr time to split the evening
 	var currentHour = parseFloat(m.format("HH"));
-	
+
 	if(currentHour >= split_afternoon && currentHour <= split_evening) {
 		g = "afternoon";
 	} else if(currentHour >= split_evening) {

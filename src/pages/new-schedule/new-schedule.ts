@@ -46,7 +46,7 @@ export class NewSchedulePage implements OnDestroy {
     return this.limDate = moment().format('YYYY-MM-DD');
   }
  
-  notifi(id:string | Int32Array, title:string, time:string ) {
+  notifi(id:string | Int32Array, title:string, time:string, info: Item ) {
       if (this.plt.is('cordova')) {
         const toDate = new Date(time);
         const idToNub = Number(id);
@@ -58,7 +58,7 @@ export class NewSchedulePage implements OnDestroy {
           color: '#f9c440',
           icon: 'file://assets/imgs/logo.png',
           trigger: { at: toDate },
-          data: { id: id }
+          data: { info: info }
         });
       }
   }
@@ -110,8 +110,8 @@ export class NewSchedulePage implements OnDestroy {
       dateSet: setDate
     }
 
-    this.notifi(hash, data.title, setDate);
     this.scheduleProv.addSchedule(newData);
+    this.notifi(hash, data.title, setDate, newData);
     return this.dismiss()
       .then(() => this.isValid('New Schedule Added'));
   }
